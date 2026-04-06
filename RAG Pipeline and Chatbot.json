@@ -1,0 +1,1070 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "VVSPL",
+        "formDescription": "Please Submit Your File",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "File:",
+              "fieldType": "file",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "5da6e481-cf54-44e9-9e05-1783c0e57cae",
+      "name": "On form submission",
+      "webhookId": "05ba5bae-3486-42ea-8077-77b120eecb2e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        256
+      ],
+      "id": "88925ea1-f77a-44bb-91b5-ec7d069a918a",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        656,
+        432
+      ],
+      "id": "293a863c-e752-47cd-95df-f80d3634c588",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        272
+      ],
+      "id": "b9404ec7-6aa3-4f71-bcb8-075d4d2df27b",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "pLkAsp7UPN9cF3qw",
+          "name": "Valentiz_Ventures_Pvt_Ltd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{$json.input.input}}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2032,
+        272
+      ],
+      "id": "f87dd42e-153f-4eae-9a57-8da194195c15",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "valentizventures2@gmail.com",
+          "mode": "list",
+          "cachedResultName": "valentizventures2@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "useDefaultReminders": false,
+        "additionalFields": {
+          "attendees": [
+            "valentizventures2@gmail.com",
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees1_Attendees', ``, 'string') }}",
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees2_Attendees', ``, 'string') }}"
+          ],
+          "conferenceDataUi": {
+            "conferenceDataValues": {
+              "conferenceSolution": "hangoutsMeet"
+            }
+          },
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "sendUpdates": "all",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        },
+        "remindersUi": {
+          "remindersValues": [
+            {
+              "method": "email",
+              "minutes": 10
+            },
+            {
+              "method": "email",
+              "minutes": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2928,
+        336
+      ],
+      "id": "28a6f3d5-0442-4298-89b8-a8fb08d2cd1f",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "D6ZBOuWurC57HYBA",
+          "name": "VVSPL GOOGLE 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "valentizventures2@gmail.com",
+          "mode": "list",
+          "cachedResultName": "valentizventures2@gmail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {
+          "timeZone": {
+            "__rl": true,
+            "value": "Asia/Kolkata",
+            "mode": "list",
+            "cachedResultName": "Asia/Kolkata"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2496,
+        336
+      ],
+      "id": "31fdffe5-5667-44ff-9bfb-0ba60a27c1f3",
+      "name": "Get many events in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "D6ZBOuWurC57HYBA",
+          "name": "VVSPL GOOGLE 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "valentizventures2@gmail.com",
+          "mode": "list",
+          "cachedResultName": "valentizventures2@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2640,
+        336
+      ],
+      "id": "17bf1c12-9d28-4d91-839e-689c5851701f",
+      "name": "Delete an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "D6ZBOuWurC57HYBA",
+          "name": "VVSPL GOOGLE 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "valentizventures2@gmail.com",
+          "mode": "list",
+          "cachedResultName": "valentizventures2@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "useDefaultReminders": false,
+        "updateFields": {
+          "attendeesUi": {
+            "values": {
+              "attendees": [
+                "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees0_Attendees', ``, 'string') }}",
+                "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees1_Attendees', ``, 'string') }}"
+              ]
+            }
+          },
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        },
+        "remindersUi": {
+          "remindersValues": [
+            {
+              "method": "email",
+              "minutes": 10
+            },
+            {
+              "method": "email",
+              "minutes": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        2784,
+        336
+      ],
+      "id": "399f6b66-49ac-497a-99cd-2c7efaffc016",
+      "name": "Update an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "D6ZBOuWurC57HYBA",
+          "name": "VVSPL GOOGLE 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7ad34d9c-d899-462b-b779-9a890405e8a0",
+              "leftValue": "={{ $('hook').item.json.body.message }}\n\n",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "33570468-b500-4f93-be4f-ec5696b16673",
+              "leftValue": "={{ $binary}}",
+              "rightValue": "image",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1264,
+        -16
+      ],
+      "id": "78a4f3cd-9039-4520-880d-9788109ea36b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19089d33-97fd-4b77-8304-354a54a19d1a",
+              "name": "=body.message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1808,
+        112
+      ],
+      "id": "0592b2b7-64ac-493e-913d-e33fc1dc28f1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat-1",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        944,
+        -16
+      ],
+      "id": "33f1a462-b023-46b9-bcf7-7f7e1fbfe833",
+      "name": "hook",
+      "webhookId": "df8ab960-85d6-4567-9cfe-d85815d3a637"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0426a9ae-503a-4f50-a238-781e9da1e6e7",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "Text message detected.",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3184,
+        352
+      ],
+      "id": "a414b30b-7443-4c20-b15a-5c1b1ba9e837",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = $('AI Agent').first().json.output\nreturn [{ json: { output } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2720,
+        0
+      ],
+      "id": "fbe25e5a-7234-458e-a090-5a471f9083a6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2928,
+        0
+      ],
+      "id": "6e8ee73b-780e-47df-acce-04822fecbd90",
+      "name": "Text Response"
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "operation": "speechToText",
+        "file": "audio",
+        "additionalOptions": {},
+        "requestOptions": {}
+      },
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        112
+      ],
+      "id": "12bdb6fa-b6c1-4d2a-9a89-499638d7a6ca",
+      "name": "Transcribe audio or video",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "ZKWVU42CdfwFt9mP",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f85e5257-cc67-4868-b272-4d9377734110",
+              "leftValue": "={{ $binary.audio }}",
+              "rightValue": "audio",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1360,
+        128
+      ],
+      "id": "48825751-4178-4527-8976-2d7c2d38e2b3",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "={{ $('hook').item.json.body.message || \"\" }}",
+        "inputType": "base64",
+        "binaryPropertyName": "image",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        288
+      ],
+      "id": "3d847d2f-5c74-404c-97c2-35bbfdbae319",
+      "name": "Analyze image",
+      "credentials": {
+        "openAiApi": {
+          "id": "pLkAsp7UPN9cF3qw",
+          "name": "Valentiz_Ventures_Pvt_Ltd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19089d33-97fd-4b77-8304-354a54a19d1a",
+              "name": "=body.message",
+              "value": "={{ $('hook').item.json.body.message }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        0
+      ],
+      "id": "8d82ffc4-9501-4647-9f05-51d18932d654",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageAnalyze = $input.first().json['0'].content[0].text ;\nconst UserInput = $('hook').first().json.body.message\nreturn [{ json: { imageAnalyze,UserInput } }];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1728,
+        288
+      ],
+      "id": "73f724e1-2b76-4ad0-8414-8e0391722d50",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        2144,
+        272
+      ],
+      "id": "26acd9b5-080e-4387-931a-8db5ec0f31c8",
+      "name": "Send a message in Gmail",
+      "webhookId": "ce62a216-0813-464f-981b-a779ebda6c21",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lhOVDTraVyFmK2zT",
+          "name": "VVSPL Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# RAG Pipeline & Multimodal Chat Bot\n",
+        "height": 1088,
+        "width": 3552
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -272
+      ],
+      "id": "4f45dac4-1622-45f5-b540-1edbcb8317d5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Qdrant Upload\n",
+        "height": 816,
+        "width": 736,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        112,
+        -128
+      ],
+      "id": "b5970bdc-026a-4479-8662-eedcc100730a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Qdrant Retrieval & Processing\n",
+        "height": 816,
+        "width": 2560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -128
+      ],
+      "id": "7c6a30a8-a9cd-4d73-9c8f-fed6543f5d10",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "vvspl",
+          "mode": "list",
+          "cachedResultName": "vvspl"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "2ec32a1f-cbda-4cb5-85df-608a757d4370",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "9tUGJwnnJesgG5co",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Call this tool always whenever users asks anything related to the company valentiz ventures pvt. ltd. (VVSPL).",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "vvspl",
+          "mode": "list",
+          "cachedResultName": "vvspl"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        2224,
+        336
+      ],
+      "id": "de571c5d-8d4b-45a2-be9c-99a68ded1055",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "9tUGJwnnJesgG5co",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1920,
+        272
+      ],
+      "id": "b9b02760-ac5b-4209-aa7c-6a5423cb86f8",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "pLkAsp7UPN9cF3qw",
+          "name": "Valentiz_Ventures_Pvt_Ltd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2320,
+        544
+      ],
+      "id": "be78674e-a087-467b-a5f8-d5cf82b11cc7",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pLkAsp7UPN9cF3qw",
+          "name": "Valentiz_Ventures_Pvt_Ltd"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body?.message || $('hook').item.json.body?.message }}\n",
+        "options": {
+          "systemMessage": "=You are V.I.R.A, the professional and helpful AI assistant of Valentiz Venture Services Private Limited.\n\n1.Core Responsibilities:\n-For every user query, you must ALWAYS fetch information from the vector database tool first.\n-You must answer ONLY using the information retrieved from the vector database tool to answer in a short way.\n-If the vector database data contains a URL, display it as a clickable hyperlink.\n-If there is no URL, show only plain text.\n-Do NOT add placeholders like \"Visit Here.\"\n-Keep responses clean, readable, and professional.\n-Do NOT add, modify, corrupt, or assume any data.\n-Do NOT use your own general knowledge.\n-This behavior is mandatory for every query.\n1.RESPONSE RULES:\n-If data exists → show retrieved data only in a short way.\n-If data contains a URL → make it clickable.\n\n2.STRICT DON’TS:\n-Do NOT answer without checking the vector database tool.\n-Do NOT hallucinate or guess and do not use simple memory or chatmodel to guess.\n-Do NOT rewrite URLs.\n-Do NOT add extra commentary.\n-This is your permanent behavior.\n\n\n2. Email Formatting & Delivery\n- If a user requests details to be shared via email:  \n  - Ask for their email ID.  \n  - Use the requested topic as the email subject.  \n  - Add a relevant emoji to the subject and main headings. For example:  \n    - Reports → \"📊 Monthly Report – Topic\"  \n    - Meeting → \"📅 Meeting Details – Topic\"  \n    - General Info → \"ℹ️ Information – Topic\"  \n  - Insert retrieved data into **HTML format** with proper structure.  \n  - **Always use the email tool to send emails to the client and the company.**  \n  - For confirmed or rescheduled appointments, **always include the Google Meet link** in the email under a dedicated line:  \n    `<li><b style=\"color:#e74c3c;\">Google Meet Link:</b> <a href=\"[Google Meet URL]\" target=\"_blank\">Join Meeting</a></li>`\n\nHTML Formatting Rules:\n- Wrap body: `<html><body style=\"background-color:#f2f2f2; padding:20px; font-family:Arial, sans-serif;\"> … </body></html>`.  \n- Display company logo at the top:  \n  `<div style=\"text-align:left; margin-bottom:20px;\"><img src=\"https://res.cloudinary.com/dvh5slhei/image/upload/b_rgb:FAF8F8/Logo_without_background_gveo9e\" border=\"0\" alt=\"Valentiz Venture Services Pvt. Ltd.\" height=\"60\"/></div>`  \n- Start with greeting: `<p>Dear [Name],</p>`  \n- Use `<h2>` or `<strong>` for headings.  \n- Use `<ul><li>…</li></ul>` for bullet points.  \n- Apply `<b>` for keywords with random inline color from: #e74c3c, #2980b9, #27ae60, #8e44ad, #f39c12. Example: `<b style=\"color:#2980b9;\">Important</b>`  \n- Use `<br>` for line breaks.  \n- Embed a GIF contextually:  \n<div style=\"text-align:left; margin:20px 0;\">\n  <img \n    src=\"https://res.cloudinary.com/dvh5slhei/image/upload/v1761716372/Black_Simple_Record_Vlog_Youtube_Intro_2_jjgqgp.gif\"\n    alt=\"Valentiz Venture Services Pvt Ltd GIF\"\n    width=\"250\"\n    style=\"display:inline-block; max-width:250px; height:auto;\"\n  />\n</div>\n\n  \n- Place GIF after main content but before signature.  \n- End with closing:  \n  `<p>Kind regards,<br>V.I.R.A<br>Valentiz Venture Services Pvt. Ltd.</p>`  \n\nFollow Us Section (after `<hr>`):\n<div style=\"text-align: center; margin-top: 20px; padding: 0 10px;\">\n  <p style=\"font-size: 15px; font-weight: bold; color: #555; margin-bottom: 15px;\">Follow us on</p>\n  <div style=\"display: inline-block; max-width: 100%;\">\n    <!-- Facebook -->\n    <a href=\"https://www.facebook.com/people/Valentiz-Venture-Services-Private-Limited/61576557292770/#\" target=\"_blank\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/733/733547.png\" alt=\"Facebook\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n    <!-- Email -->\n    <a href=\"mailto:admin.ch@v2spl.com\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/732/732200.png\" alt=\"Email\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n    <!-- YouTube -->\n    <a href=\"https://www.youtube.com/channel/UC1K-fRemIABSdfip93H7QKA\" target=\"_blank\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/1384/1384060.png\" alt=\"YouTube\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n    <!-- Instagram -->\n    <a href=\"https://www.instagram.com/v2spl/\" target=\"_blank\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111463.png\" alt=\"Instagram\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n    <!-- WhatsApp -->\n    <a href=\"https://wa.me/9112229202\" target=\"_blank\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/733/733585.png\" alt=\"WhatsApp\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n    <!-- Telegram -->\n    <a href=\"https://t.me/VVSPL_telegram_bot\" target=\"_blank\" style=\"display: inline-block; margin: 5px 8px; text-decoration: none;\">\n      <img src=\"https://cdn-icons-png.flaticon.com/512/2111/2111646.png\" alt=\"Telegram\" width=\"28\" height=\"28\" style=\"display: block; border: none;\">\n    </a>\n  </div>\n</div>\n3. Detect user tone (Layman = simple, Sophisticated = refined, Professional = clear) and mirror it in chat and emails.\n\n4. Working Days & Meeting Hours: \n- Working Days: Monday to Friday only\n- Meeting Hours (Asia/Kolkata): Morning: 10:00 AM – 12:00 PM Afternoon: 2:00 PM – 4:30 PM\n- CURRENT TIME INFO:\n Current timestamp: {{$now}}\n Today's date: {{$now.format('YYYY-MM-DD')}}\n Current time: {{$now.format('HH:mm')}}\n\n5. Booking Flow: - Ask for appointment Purpose → preferred date/time → department (buttons: AI, Digital Marketing, Power BI, Web Development, Testing Network, Business Development). \n- Convert times to Asia/Kolkata. \n- Allow Mon–Fri, hours 10 AM–12 PM or 2 PM–4:30 PM. \n- From Google Sheet, find members with Status = “Yes”, pick 2 members whose status is \"Yes\", fetch department member's emails from Google Sheet only and always. \n- Ensure <5 meetings per day per department.\n - If weekend, outside hours, or full → suggest 2–3 alternative time slots as clickable buttons. \n- Collect client name, email, phone → show booking summary → buttons: Confirm ✅ / Change ⏱️ / Cancel ❌ \n- Once confirmed: create 30-min Google Calendar event (Asia/Kolkata) with Purpose, description “Scheduled by V.I.R.A”, auto Meet link, guests = client + company + 2 members. \n- Send HTML individual different confirmation and reminder emails **including the Google Meet link** using email tool (always to client and company and team members only). \n6. Reschedule Flow: - Detect “reschedule”, “change”, or “move”. \nAsk old details → find event → request new date/time → validate (Mon–Fri + hours).\n - If busy → suggest 2–3 alternative slots as buttons. \n- On confirmation → update event (same guests/Meet). \n- Send individual different confirmation and reminder emails **including updated Google Meet link** to client and company and team member using email tool Always.\n\n7. You are a scheduling and coordination assistant. Always follow these strict rules:\n\n1.Convert all times to Asia/Kolkata (IST).\n2.Work only Mon–Fri, 9 AM–6 PM IST.\n3.Always ask for confirmation before booking.\n4.Use Google Sheet tool only to fetch department members' emails.\n5.Never show department email IDs in chat.\n6.Use Gmail tool only to send mails.\n7.Send individual, different confirmation and reminder emails (with Meet link) to the client, company, and department members.\n8.Check department member status before sending.\n9.Maintain professionalism and privacy in every message.\n\n\n\n8. Prompt Start:\n\nYou are an Intelligent Image Analyst Agent.\nYou receive:\n\nImage Analysis: {{ $json.imageAnalyze }}\n\nUser Question: {{ $json.UserInput }}\n\nFollow these rules:\n\nIf the user question is ONLY about the content seen in the image, answer strictly from the Image Analysis.\n\nIf the user question involves both the image AND VVSPL, employees, roles, or requires factual information, then combine Image Analysis + RAG Data to produce a comprehensive answer.\n\nIf the question is only about VVSPL or general RAG knowledge (not about the image), answer only from RAG Data.\n\nNever include content not found in the image analysis or RAG data.\n\nReturn ONLY the final answer without explanation.\n\nPrompt End."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2048,
+        0
+      ],
+      "id": "daa22d6a-c80d-4b7e-8cc5-7b3fd83012cf",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the Content-Type header safely\nconst headers = $('hook').first().json.headers || {};\nconst contentType = headers['content-type'] || '';\n\n\n// Initialize response object\nlet type = \"unknown\";\nlet isBinary = false;\nlet isText = false;\n\n// Check Content-Type to decide\nif (contentType.includes(\"multipart/form-data\")) {\n  type = \"binary\";\n  isBinary = true;\n} else if (contentType.includes(\"application/json\")) {\n  type = \"text\";\n  isText = true;\n}\n\n// Output clear results\nreturn [\n  {\n    json: {\n      type,             // \"binary\" or \"text\"\n      isBinary,         // true/false\n      isText,           // true/false\n      contentType,      // for debugging/logging\n      message: isBinary \n        ? \"Binary data (e.g. image/file upload) detected.\" \n        : \"Text message detected.\"\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        0
+      ],
+      "id": "ab988f64-68f8-4875-9c6d-e15b6e3b4e79",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "valentizventures2@gmail.com",
+          "mode": "list",
+          "cachedResultName": "valentizventures2@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        3056,
+        336
+      ],
+      "id": "5fc26c92-9408-48d4-8a00-7e89a4cb1629",
+      "name": "Delete an event in Google Calendar1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "M3I07BEQpPnSbkxM",
+          "name": "Vvspl Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    userMessage: $json.userMessage,\n    currentPage: $json.pageContext?.page || \"unknown\",\n    pageTitle: $json.pageContext?.title || \"\",\n    pageUrl: $json.pageContext?.url || \"\"\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        368
+      ],
+      "id": "4a474b36-f932-4a97-93bf-4e62414b385b",
+      "name": "Code in JavaScript3"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Text Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio or video": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio or video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete an event in Google Calendar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f505c4dc4e64d70fc6d74b9ccac683662d40fe129a8bf6707074738b44b026e2"
+  }
+}
